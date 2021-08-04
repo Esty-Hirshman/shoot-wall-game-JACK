@@ -1,0 +1,295 @@
+function Wall.new 0
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+push constant 0
+call Wall.drawLine 2
+pop temp 0
+push constant 16
+pop this 0
+push pointer 0
+return
+function Wall.drawWall 1
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 255
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push local 0
+call Wall.drawLine 2
+pop temp 0
+push constant 80
+call Sys.wait 1
+pop temp 0
+push local 0
+push constant 16
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Wall.drawLine 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 511
+lt
+not
+if-goto WHILE_END0
+push constant 32
+push argument 1
+call Math.multiply 2
+push local 0
+push constant 16
+call Math.divide 2
+add
+pop local 1
+push pointer 0
+push local 1
+call Wall.drawBlock 2
+pop temp 0
+push local 0
+push constant 16
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Wall.drawBlock 1
+push argument 0
+pop pointer 0
+push constant 16384
+push argument 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 1040
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 1040
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 1040
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 8322
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 8322
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 8322
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 8322
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 17416
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 17416
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 17416
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 1
+neg
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Wall.run 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 198
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Wall.drawOldLines 1
+pop temp 0
+push pointer 0
+push constant 0
+call Wall.drawLine 2
+pop temp 0
+push this 0
+push constant 16
+add
+pop this 0
+push constant 0
+not
+return
+label IF_FALSE0
+push constant 0
+return
+function Wall.drawOldLines 4
+push argument 0
+pop pointer 0
+push this 0
+push constant 16
+sub
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 1
+neg
+gt
+not
+if-goto WHILE_END0
+push constant 0
+not
+pop local 3
+push constant 0
+pop local 0
+label WHILE_EXP1
+push local 0
+push constant 511
+lt
+not
+if-goto WHILE_END1
+push constant 16384
+push local 1
+push constant 32
+call Math.multiply 2
+add
+push local 0
+push constant 16
+call Math.divide 2
+add
+call Memory.peek 1
+pop local 2
+push local 2
+push constant 0
+eq
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop local 3
+push pointer 0
+push constant 32
+push local 1
+push constant 16
+add
+call Math.multiply 2
+push local 0
+push constant 16
+call Math.divide 2
+add
+call Wall.drawBlock 2
+pop temp 0
+label IF_FALSE0
+push local 0
+push constant 16
+add
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 3
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 0
+push constant 16
+sub
+pop this 0
+label IF_FALSE1
+push local 1
+push constant 16
+sub
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Wall.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

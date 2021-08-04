@@ -1,0 +1,11 @@
+class Main {
+
+    function void main() {
+        var ShootWallGame game;
+        do ShootWallGame.newInstance();
+        let game = ShootWallGame.getInstance();
+        do game.start();
+        do game.dispose();
+        return;
+    }
+}

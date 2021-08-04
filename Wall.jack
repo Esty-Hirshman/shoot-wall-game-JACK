@@ -1,0 +1,117 @@
+/*
+    draw and manage with wall in game
+*/
+
+class Wall{
+    field int numLine;
+    /*
+        constructor
+    */
+    constructor Wall new(){
+        do drawLine(0);
+        let numLine = 16;
+        return this;
+    }
+
+    /*
+        draw all wall using the function drawLine()
+    */
+    method void drawWall(){
+        var int i;
+        let  i =0;
+        while(i < 255){
+            do drawLine(i);
+            do Sys.wait(80);
+            let i = i+16;
+        }
+        return;
+
+    }
+
+    /*
+        draw one line in wall
+    */
+    method void drawLine(int line){
+        var int i, location;
+        let i=0;
+        while(i < 511){
+            let location = (32*line) + (i/16);
+            do drawBlock(location);
+            let i = i+16;
+        }
+        return;
+    }
+
+    /*
+        draw one block in line in wall
+    */
+    method void drawBlock(int location) {
+        var int memAddress;
+        let memAddress = 16384+location;
+        do Memory.poke(memAddress+0, -1);
+        do Memory.poke(memAddress+32, 1040);
+        do Memory.poke(memAddress+64, 1040);
+        do Memory.poke(memAddress+96, 1040);
+        do Memory.poke(memAddress+128, -1);
+        do Memory.poke(memAddress+160, -1);
+        do Memory.poke(memAddress+192, 8322);
+        do Memory.poke(memAddress+224, 8322);
+        do Memory.poke(memAddress+256, 8322);
+        do Memory.poke(memAddress+288, 8322);
+        do Memory.poke(memAddress+320, -1);
+        do Memory.poke(memAddress+352, -1);
+        do Memory.poke(memAddress+384, 17416);
+        do Memory.poke(memAddress+416, 17416);
+        do Memory.poke(memAddress+448, 17416);
+        do Memory.poke(memAddress+480, -1);
+	return;
+}
+
+    /*
+        ad new line on top of the wall
+    */
+    method boolean run(){
+        if(numLine < 198){
+            do drawOldLines();
+            do drawLine(0);
+            let numLine = numLine + 16; 
+            return true;  
+        }
+        return false;
+    }
+
+    /*
+        draw old wall, before adding new line and move it one kine down
+    */
+    method void drawOldLines(){
+        var int x,y,color;
+        var boolean lineEmpty;
+        let y=numLine -16;
+        while(y>-1){
+            let lineEmpty = true;
+            let x = 0;
+            while(x < 511){
+                let color = Memory.peek(16384 + (y*32) + (x/16));
+                if(~(color = 0)){
+                    let lineEmpty = false;
+                    do drawBlock((32*(y+16)) + (x/16));   
+                }
+                let x = x + 16;   
+            }
+            if(lineEmpty){
+                let numLine = numLine -16;
+                }
+            let y = y - 16;
+        }
+        return;
+    }
+
+
+    /*
+        free memory
+    */
+    method void dispose(){
+            do Memory.deAlloc(this);
+            return;
+        }
+    }
